@@ -1,0 +1,30 @@
+[submodule "references/cc10x"]
+	path = references/cc10x
+	url = https://github.com/romiluz13/cc10x.git
+[submodule "references/langgraph"]
+	path = references/langgraph
+	url = https://github.com/langchain-ai/langgraph.git
+[submodule "references/openhands"]
+	path = references/openhands
+	url = https://github.com/OpenHands/OpenHands.git
+[submodule "references/cline"]
+	path = references/cline
+	url = https://github.com/cline/cline.git
+[submodule "references/openai-agents-python"]
+	path = references/openai-agents-python
+	url = https://github.com/openai/openai-agents-python.git
+[submodule "references/microsoft-agent-framework"]
+	path = references/microsoft-agent-framework
+	url = https://github.com/microsoft/agent-framework.git
+[submodule "references/mastra"]
+	path = references/mastra
+	url = https://github.com/mastra-ai/mastra.git
+[submodule "references/crewai"]
+	path = references/crewai
+	url = https://github.com/crewAIInc/crewAI.git
+[submodule "references/autogen"]
+	path = references/autogen
+	url = https://github.com/microsoft/autogen.git
+[submodule "references/autogpt"]
+	path = references/autogpt
+	url = https://github.com/Significant-Gravitas/AutoGPT.git
