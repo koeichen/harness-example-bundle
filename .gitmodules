@@ -28,3 +28,9 @@
 [submodule "references/autogpt"]
 	path = references/autogpt
 	url = https://github.com/Significant-Gravitas/AutoGPT.git
+[submodule "references/superpowers"]
+	path = references/superpowers
+	url = https://github.com/obra/superpowers.git
+[submodule "references/archon"]
+	path = references/archon
+	url = https://github.com/coleam00/Archon.git
