@@ -18,6 +18,7 @@ priority 先看 harness-engineering value，再看 GitHub popularity。
 | P0 | OpenHands | `references/openhands` | conversation/event service、sandbox service、coding-agent platform runtime、action/observation feedback surface |
 | P0 | Cline | `references/cline` | IDE-native tool safety、permission gate、diff review、terminal/browser feedback、checkpoint、rollback |
 | P0 | Archon | `references/archon` | YAML workflow DAG、deterministic/AI node composition、artifact handoff、worktree isolation、approval gate、workflow event log |
+| P0 | OpenHarness | `references/openharness` | Python agent loop、tool registry、skills/plugins、permissions/hooks、memory/compaction、sandbox、swarm coordination |
 | P1 | OpenAI Agents SDK Python | `references/openai-agents-python` | guardrail、handoff、session、tracing、human-in-the-loop primitive、sandbox agent |
 | P1 | Microsoft Agent Framework | `references/microsoft-agent-framework` | production workflow orchestration、graph pattern、durability、restartability、observability、HITL |
 | P1 | Mastra | `references/mastra` | TypeScript agent/workflow framework、model routing、branch/parallel workflow、durable agent execution state |
@@ -398,6 +399,97 @@ rg -n "workflow|DAG|node|depends_on|loop|retry|artifact|approval|interactive|wor
 ### Harness lesson
 
 Archon 说明：AI coding harness 可以像 CI/CD 一样被声明成 repo-local workflow。关键不是让模型更自由，而是让流程、依赖、验证、artifact 和 isolation 由 harness 拥有；AI 只在需要判断和生成的节点内工作。
+
+## P0 - OpenHarness
+
+路径：`references/openharness`
+
+### 为什么这个 repo 重要
+
+OpenHarness 是研究 **lightweight agent harness runtime** 的强 reference。
+
+它用 Python 实现 agent loop、provider API、tool registry、skills/plugins、MCP client、permission checker、PreToolUse/PostToolUse hook、persistent memory、auto-compaction、sandbox、swarm coordination、TUI runtime 和 channel bridge。相比 Archon 的 repo-local workflow DAG，OpenHarness 更适合研究一个完整 agent runtime 内部怎样把 tool、context、governance 和 multi-agent coordination 串起来。
+
+重点看：agent loop 如何处理 streaming tool-call cycle，tool 执行前后如何挂 permissions/hooks，skills/plugins 如何被发现和加载，memory/compaction 如何支撑 long session，swarm/team/task 如何落地多代理协作，ohmo gateway 如何把 chat channel 接入同一个 harness。
+
+### 优先阅读
+
+- `README.md`
+- `README.zh-CN.md`
+- `pyproject.toml`
+- `src/openharness/engine/query_engine.py`
+- `src/openharness/engine/stream_events.py`
+- `src/openharness/engine/messages.py`
+- `src/openharness/tools/base.py`
+- `src/openharness/tools/bash_tool.py`
+- `src/openharness/tools/file_edit_tool.py`
+- `src/openharness/tools/mcp_tool.py`
+- `src/openharness/tools/task_create_tool.py`
+- `src/openharness/tools/team_create_tool.py`
+- `src/openharness/permissions/checker.py`
+- `src/openharness/permissions/modes.py`
+- `src/openharness/hooks/executor.py`
+- `src/openharness/hooks/loader.py`
+- `src/openharness/hooks/schemas.py`
+- `src/openharness/skills/loader.py`
+- `src/openharness/skills/registry.py`
+- `src/openharness/plugins/loader.py`
+- `src/openharness/plugins/schemas.py`
+- `src/openharness/mcp/client.py`
+- `src/openharness/mcp/config.py`
+- `src/openharness/memory/manager.py`
+- `src/openharness/memory/memdir.py`
+- `src/openharness/services/compact/__init__.py`
+- `src/openharness/services/session_storage.py`
+- `src/openharness/sandbox/adapter.py`
+- `src/openharness/sandbox/docker_backend.py`
+- `src/openharness/sandbox/path_validator.py`
+- `src/openharness/swarm/registry.py`
+- `src/openharness/swarm/team_lifecycle.py`
+- `src/openharness/swarm/subprocess_backend.py`
+- `src/openharness/swarm/worktree.py`
+- `src/openharness/tasks/manager.py`
+- `src/openharness/ui/runtime.py`
+- `src/openharness/ui/permission_dialog.py`
+- `src/openharness/bridge/session_runner.py`
+- `src/openharness/autopilot/service.py`
+- `ohmo/runtime.py`
+- `ohmo/gateway/service.py`
+- `ohmo/gateway/router.py`
+- `ohmo/session_storage.py`
+- `tests/test_engine/`
+- `tests/test_tools/`
+- `tests/test_permissions/`
+- `tests/test_hooks/`
+- `tests/test_skills/`
+- `tests/test_plugins/`
+- `tests/test_sandbox/`
+- `tests/test_swarm/`
+- `tests/test_services/`
+
+Search:
+
+```bash
+rg -n "query|stream|tool_use|ToolResult|Permission|Hook|skill|plugin|MCP|memory|compact|sandbox|swarm|team|task|session|gateway|autopilot|approval" references/openharness/src references/openharness/ohmo references/openharness/tests references/openharness/README.md
+```
+
+### 需要提取什么
+
+- Agent loop 的 streaming/tool-call/control flow
+- Tool registry、tool input schema 和 tool result contract
+- Permission modes、path rules、interactive dialog 和 skip-permission 语义
+- PreToolUse / PostToolUse hook lifecycle
+- Skill 与 plugin discovery、loading 和 trust boundary
+- MCP client 和 MCP tool bridge
+- Persistent memory、session storage 和 auto-compaction
+- Sandbox adapter、Docker backend 和 path validator
+- Swarm/team/task lifecycle、mailbox、worktree 和 permission sync
+- TUI/runtime 与 channel/gateway 如何接入 harness core
+- ohmo 如何把 personal agent、chat channel、repo work 和 PR flow 组合起来
+
+### Harness lesson
+
+OpenHarness 说明：agent harness 可以被拆成一组轻量但完整的 runtime primitives：agent loop、tools、skills、memory、permissions、hooks、sandbox 和 swarm coordination。它适合作为“如果从零实现一个 Python harness，需要哪些模块”的代码级 reference。
 
 ## P1 - OpenAI Agents SDK Python
 

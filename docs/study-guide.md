@@ -11,11 +11,12 @@
 5. 读 OpenHands 的 conversation、event、action/observation、runtime 和 sandbox implementation。
 6. 读 Cline 的 permission、diff、checkpoint、terminal、browser 和 restore flow。
 7. 读 Archon 的 YAML workflow DAG、artifact handoff、worktree isolation、workflow event 和 adapter boundary。
-8. 读 OpenAI Agents SDK 的 guardrail、handoff、session、tracing、HITL 和 sandbox example。
-9. 读 Microsoft Agent Framework 和 Mastra，学习 production 与 TypeScript workflow pattern。
-10. 读 Superpowers 的 session bootstrap、skill trigger、TDD/process gate 和 subagent review loop。
-11. 读 CrewAI 和 AutoGen，学习 multi-agent orchestration vocabulary。
-12. 最后读 AutoGPT，学习 platform-scale workflow/product architecture。
+8. 读 OpenHarness 的 agent loop、tool registry、skills/plugins、permissions/hooks、memory/compaction、sandbox 和 swarm implementation。
+9. 读 OpenAI Agents SDK 的 guardrail、handoff、session、tracing、HITL 和 sandbox example。
+10. 读 Microsoft Agent Framework 和 Mastra，学习 production 与 TypeScript workflow pattern。
+11. 读 Superpowers 的 session bootstrap、skill trigger、TDD/process gate 和 subagent review loop。
+12. 读 CrewAI 和 AutoGen，学习 multi-agent orchestration vocabulary。
+13. 最后读 AutoGPT，学习 platform-scale workflow/product architecture。
 
 Do not 因为 AutoGPT star 多就先读它。star 可以作为 popularity signal，但 harness clarity 更重要。
 
