@@ -5,13 +5,13 @@
 如果你是后续读取本仓库的 AI agent，按这个顺序执行：
 
 1. 先读本 `AGENTS.md`。
-2. 读 `references/cc10x/README.md`。
-3. 检查 cc10x 的 router、workflow artifact、event log、gate、hook 和 replay validation。
-4. 读 LangGraph 的 state graph、conditional routing、checkpoint 和 interrupt implementation。
-5. 读 OpenHands 的 conversation、event、action/observation、runtime 和 sandbox implementation。
-6. 读 Cline 的 permission、diff、checkpoint、terminal、browser 和 restore flow。
-7. 读 Archon 的 YAML workflow DAG、artifact handoff、worktree isolation、workflow event 和 adapter boundary。
-8. 读 OpenHarness 的 agent loop、tool registry、skills/plugins、permissions/hooks、memory/compaction、sandbox 和 swarm implementation。
+2. 首读 P0 组。P0 内按问题选择顺序，不把某个 repo 固定为唯一入口。
+3. 读 Archon 的 YAML workflow DAG、artifact handoff、worktree isolation、workflow event 和 adapter boundary。
+4. 读 `references/cc10x/README.md`，再检查 cc10x 的 router-owned orchestration、workflow artifact、lifecycle event log、hook/gate boundary、replay validation、resume/compaction survival 和 anti-false-completion discipline。
+5. 读 LangGraph 的 state graph、conditional routing、checkpoint 和 interrupt implementation。
+6. 读 OpenHands 的 conversation、event、action/observation、runtime 和 sandbox implementation。
+7. 读 Cline 的 permission、diff、checkpoint、terminal、browser 和 restore flow。
+8. 读 OpenHarness 的 agent loop、tool registry、skills/plugins、permissions/hooks、memory/compaction、sandbox 和 swarm coordination。
 9. 读 OpenAI Agents SDK 的 guardrail、handoff、session、tracing、HITL 和 sandbox example。
 10. 读 Microsoft Agent Framework 和 Mastra，学习 production 与 TypeScript workflow pattern。
 11. 读 Superpowers 的 session bootstrap、skill trigger、TDD/process gate 和 subagent review loop。

@@ -4,7 +4,7 @@
 
 priority 先看 harness-engineering value，再看 GitHub popularity。
 
-- **P0**: core harness reference。先读这些。
+- **P0**: core harness reference。按研究目标选择首读，不把单个 repo 当固定第一。
 - **P1**: 强 production primitive 或 language-specific pattern。
 - **P2**: 有用的 secondary reference、historical system 或较窄的 orchestration pattern。
 - **P3**: star 很高或 platform-scale，但噪音也较大的系统。
@@ -13,12 +13,12 @@ priority 先看 harness-engineering value，再看 GitHub popularity。
 
 | Priority | Repo | Path | 主要学习点 |
 | --- | --- | --- | --- |
-| P0 | cc10x | `references/cc10x` | Router-owned orchestration、fail-closed gate、workflow artifact、event log、anti-false-completion discipline |
+| P0 | Archon | `references/archon` | YAML workflow DAG、deterministic/AI node composition、artifact handoff、worktree isolation、approval gate、workflow event log |
 | P0 | LangGraph | `references/langgraph` | 显式 state graph、conditional routing、durable state、checkpoint、interrupt |
 | P0 | OpenHands | `references/openhands` | conversation/event service、sandbox service、coding-agent platform runtime、action/observation feedback surface |
 | P0 | Cline | `references/cline` | IDE-native tool safety、permission gate、diff review、terminal/browser feedback、checkpoint、rollback |
-| P0 | Archon | `references/archon` | YAML workflow DAG、deterministic/AI node composition、artifact handoff、worktree isolation、approval gate、workflow event log |
 | P0 | OpenHarness | `references/openharness` | Python agent loop、tool registry、skills/plugins、permissions/hooks、memory/compaction、sandbox、swarm coordination |
+| P0 | cc10x | `references/cc10x` | Claude Code plugin-first harness、router-owned orchestration、fail-closed gate、workflow artifact、event log |
 | P1 | OpenAI Agents SDK Python | `references/openai-agents-python` | guardrail、handoff、session、tracing、human-in-the-loop primitive、sandbox agent |
 | P1 | Microsoft Agent Framework | `references/microsoft-agent-framework` | production workflow orchestration、graph pattern、durability、restartability、observability、HITL |
 | P1 | Mastra | `references/mastra` | TypeScript agent/workflow framework、model routing、branch/parallel workflow、durable agent execution state |
@@ -37,7 +37,9 @@ priority 先看 harness-engineering value，再看 GitHub popularity。
 
 ### 为什么这个 repo 重要
 
-cc10x 是本仓库的 baseline reference，因为它明确面向 Claude Code harness，而不是 generic agent framework。
+cc10x 是本仓库的 Claude Code plugin-first baseline reference。它仍是 P0，但不再是 generic harness runtime 的默认第一参考。
+
+如果目标是设计通用 workflow/runtime harness，优先从 Archon、LangGraph、OpenHands、Cline 和 OpenHarness 读起；如果目标是设计 Claude / Codex plugin-first harness，再把 cc10x 提前到第一批。
 
 它最值得研究的核心设计是 **router-owned orchestration**：
 
