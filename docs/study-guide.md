@@ -2,21 +2,30 @@
 
 ## Future Agent 首读路径
 
-如果你是后续读取本仓库的 AI agent，按这个顺序执行：
+如果你是后续读取本仓库的 AI agent，先按问题选入口，不要把某个 repo 当默认第一站：
 
 1. 先读本 `AGENTS.md`。
-2. 首读 P0 组。P0 内按问题选择顺序，不把某个 repo 固定为唯一入口。
-3. 读 Archon 的 YAML workflow DAG、artifact handoff、worktree isolation、workflow event 和 adapter boundary。
-4. 读 `references/cc10x/README.md`，再检查 cc10x 的 router-owned orchestration、workflow artifact、lifecycle event log、hook/gate boundary、replay validation、resume/compaction survival 和 anti-false-completion discipline。
-5. 读 LangGraph 的 state graph、conditional routing、checkpoint 和 interrupt implementation。
-6. 读 OpenHands 的 conversation、event、action/observation、runtime 和 sandbox implementation。
-7. 读 Cline 的 permission、diff、checkpoint、terminal、browser 和 restore flow。
-8. 读 OpenHarness 的 agent loop、tool registry、skills/plugins、permissions/hooks、memory/compaction、sandbox 和 swarm coordination。
-9. 读 OpenAI Agents SDK 的 guardrail、handoff、session、tracing、HITL 和 sandbox example。
-10. 读 Microsoft Agent Framework 和 Mastra，学习 production 与 TypeScript workflow pattern。
-11. 读 Superpowers 的 session bootstrap、skill trigger、TDD/process gate 和 subagent review loop。
-12. 读 CrewAI 和 AutoGen，学习 multi-agent orchestration vocabulary。
-13. 最后读 AutoGPT，学习 platform-scale workflow/product architecture。
+2. 如果目标是 generic workflow/runtime harness，先读 Archon、LangGraph、OpenHands、Cline 和 OpenHarness。
+3. 如果目标是 Claude / Codex plugin-first harness，再读 cc10x；它不是 generic runtime 的默认首读。
+4. 如果目标是 prompt/skill 层 workflow discipline，再读 Superpowers，并和 durable runtime reference 对照。
+5. 继续读 OpenAI Agents SDK 的 guardrail、handoff、session、tracing、HITL 和 sandbox example。
+6. 继续读 Microsoft Agent Framework 和 Mastra，学习 production 与 TypeScript workflow pattern。
+7. 继续读 CrewAI 和 AutoGen，学习 multi-agent orchestration vocabulary。
+8. 最后读 AutoGPT，学习 platform-scale workflow/product architecture。
+
+generic workflow/runtime harness 的 P0 首读重点：
+
+- Archon：YAML workflow DAG、artifact handoff、worktree isolation、workflow event 和 adapter boundary。
+- LangGraph：state graph、conditional routing、checkpoint 和 interrupt implementation。
+- OpenHands：conversation、event、action/observation、runtime 和 sandbox implementation。
+- Cline：permission、diff、checkpoint、terminal、browser 和 restore flow。
+- OpenHarness：agent loop、tool registry、skills/plugins、permissions/hooks、memory/compaction、sandbox 和 swarm coordination。
+
+plugin-first harness 的 cc10x 阅读边界：
+
+- 只在研究 Claude / Codex plugin-first harness 时提前阅读。
+- 重点看 router-owned orchestration、workflow artifact、lifecycle event log、hook/gate boundary、replay validation、resume/compaction survival 和 anti-false-completion discipline。
+- 不要把 cc10x 当成 generic workflow/runtime harness 的默认 baseline。
 
 Do not 因为 AutoGPT star 多就先读它。star 可以作为 popularity signal，但 harness clarity 更重要。
 

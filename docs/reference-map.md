@@ -4,7 +4,7 @@
 
 priority 先看 harness-engineering value，再看 GitHub popularity。
 
-- **P0**: core harness reference。按研究目标选择首读，不把单个 repo 当固定第一。
+- **P0**: core harness reference。按研究目标选择首读，不把单个 repo 当固定第一。generic workflow/runtime harness 默认从 Archon、LangGraph、OpenHands、Cline 和 OpenHarness 中选；cc10x 只作为 Claude / Codex plugin-first reference 提前阅读。
 - **P1**: 强 production primitive 或 language-specific pattern。
 - **P2**: 有用的 secondary reference、historical system 或较窄的 orchestration pattern。
 - **P3**: star 很高或 platform-scale，但噪音也较大的系统。
@@ -18,7 +18,7 @@ priority 先看 harness-engineering value，再看 GitHub popularity。
 | P0 | OpenHands | `references/openhands` | conversation/event service、sandbox service、coding-agent platform runtime、action/observation feedback surface |
 | P0 | Cline | `references/cline` | IDE-native tool safety、permission gate、diff review、terminal/browser feedback、checkpoint、rollback |
 | P0 | OpenHarness | `references/openharness` | Python agent loop、tool registry、skills/plugins、permissions/hooks、memory/compaction、sandbox、swarm coordination |
-| P0 | cc10x | `references/cc10x` | Claude Code plugin-first harness、router-owned orchestration、fail-closed gate、workflow artifact、event log |
+| P0 | cc10x | `references/cc10x` | Claude / Codex plugin-first harness reference；不是 generic runtime 默认入口 |
 | P1 | OpenAI Agents SDK Python | `references/openai-agents-python` | guardrail、handoff、session、tracing、human-in-the-loop primitive、sandbox agent |
 | P1 | Microsoft Agent Framework | `references/microsoft-agent-framework` | production workflow orchestration、graph pattern、durability、restartability、observability、HITL |
 | P1 | Mastra | `references/mastra` | TypeScript agent/workflow framework、model routing、branch/parallel workflow、durable agent execution state |
@@ -30,80 +30,6 @@ priority 先看 harness-engineering value，再看 GitHub popularity。
 ---
 
 # 按 Repo 的 Study Map
-
-## P0 - cc10x
-
-路径：`references/cc10x`
-
-### 为什么这个 repo 重要
-
-cc10x 是本仓库的 Claude Code plugin-first baseline reference。它仍是 P0，但不再是 generic harness runtime 的默认第一参考。
-
-如果目标是设计通用 workflow/runtime harness，优先从 Archon、LangGraph、OpenHands、Cline 和 OpenHarness 读起；如果目标是设计 Claude / Codex plugin-first harness，再把 cc10x 提前到第一批。
-
-它最值得研究的核心设计是 **router-owned orchestration**：
-
-- router 拥有 workflow advancement
-- specialist agent 不拥有 global workflow state
-- workflow state 存在 durable artifact 中
-- lifecycle event 追加写入 JSONL log
-- hook 负责 guardrail 和 diagnostics，不是第二套 orchestration plane
-- gate 设计为 fail closed
-- 系统要求 evidence 才能推进 phase，降低 false completion 风险
-
-### 优先阅读
-
-- `README.md`
-- `CLAUDE.md`
-- `docs/cc10x-orchestration-safety.md`
-- `docs/cc10x-orchestration-logic-analysis.md`
-- `docs/cc10x-orchestration-bible.md`
-- `docs/router-invariants.md`
-- `docs/prompt-invariants.md`
-- `docs/agent-contract-registry.md`
-- `plugins/cc10x/.claude-plugin/plugin.json`
-- `plugins/cc10x/config/hook-mode.json`
-- `plugins/cc10x/hooks/hooks.json`
-- `plugins/cc10x/hooks/README.md`
-- `plugins/cc10x/skills/cc10x-router/SKILL.md`
-- `plugins/cc10x/skills/cc10x-router/references/`
-- `plugins/cc10x/skills/session-memory/SKILL.md`
-- `plugins/cc10x/skills/plan-review-gate/SKILL.md`
-- `plugins/cc10x/skills/verification-before-completion/SKILL.md`
-- `plugins/cc10x/agents/`
-- `plugins/cc10x/scripts/cc10x_hooklib.py`
-- `plugins/cc10x/scripts/cc10x_pretooluse_guard.py`
-- `plugins/cc10x/scripts/cc10x_posttooluse_artifact_guard.py`
-- `plugins/cc10x/scripts/cc10x_sessionstart_context.py`
-- `plugins/cc10x/scripts/cc10x_precompact_state.py`
-- `plugins/cc10x/scripts/cc10x_postcompact_context.py`
-- `plugins/cc10x/scripts/cc10x_stop_persist.py`
-- `plugins/cc10x/scripts/cc10x_stop_failure_log.py`
-- `plugins/cc10x/scripts/cc10x_task_completed_guard.py`
-- `plugins/cc10x/scripts/cc10x_workflow_replay_check.py`
-- `plugins/cc10x/scripts/cc10x_harness_audit.py`
-- `plugins/cc10x/tests/fixtures/`
-
-Search:
-
-```bash
-rg -n "router|orchestration|gate|fail-closed|workflow|events.jsonl|artifact|hook|remediation|verifier|memory|compaction" references/cc10x
-```
-
-### 需要提取什么
-
-- Router supremacy invariant
-- Workflow artifact schema
-- Event log design
-- Agent contract format
-- Phase gate rules
-- Remediation loop constraints
-- Resume 和 compaction survival strategy
-- Hook boundary: guardrail, not orchestrator
-
-### Harness lesson
-
-cc10x 说明：agent harness 不能只依赖 prompt instruction。它需要 durable state、explicit phase rule 和 evidence gate，让模型更难在没有 proof 的情况下声称完成。
 
 ## P0 - LangGraph
 
@@ -492,6 +418,80 @@ rg -n "query|stream|tool_use|ToolResult|Permission|Hook|skill|plugin|MCP|memory|
 ### Harness lesson
 
 OpenHarness 说明：agent harness 可以被拆成一组轻量但完整的 runtime primitives：agent loop、tools、skills、memory、permissions、hooks、sandbox 和 swarm coordination。它适合作为“如果从零实现一个 Python harness，需要哪些模块”的代码级 reference。
+
+## P0 - cc10x
+
+路径：`references/cc10x`
+
+### 为什么这个 repo 重要
+
+cc10x 是 Claude / Codex plugin-first harness reference，不是本仓库 generic workflow/runtime harness 的默认 baseline，也不是默认首读入口。
+
+只有当目标是研究 Claude / Codex plugin packaging、router skill、hook guard、workflow artifact 或 anti-false-completion discipline 时，才把 cc10x 提前阅读。其他 generic runtime 设计问题先读 Archon、LangGraph、OpenHands、Cline 和 OpenHarness。
+
+它最值得研究的核心设计是 **router-owned orchestration**：
+
+- router 拥有 workflow advancement
+- specialist agent 不拥有 global workflow state
+- workflow state 存在 durable artifact 中
+- lifecycle event 追加写入 JSONL log
+- hook 负责 guardrail 和 diagnostics，不是第二套 orchestration plane
+- gate 设计为 fail closed
+- 系统要求 evidence 才能推进 phase，降低 false completion 风险
+
+### 优先阅读
+
+- `README.md`
+- `CLAUDE.md`
+- `docs/cc10x-orchestration-safety.md`
+- `docs/cc10x-orchestration-logic-analysis.md`
+- `docs/cc10x-orchestration-bible.md`
+- `docs/router-invariants.md`
+- `docs/prompt-invariants.md`
+- `docs/agent-contract-registry.md`
+- `plugins/cc10x/.claude-plugin/plugin.json`
+- `plugins/cc10x/config/hook-mode.json`
+- `plugins/cc10x/hooks/hooks.json`
+- `plugins/cc10x/hooks/README.md`
+- `plugins/cc10x/skills/cc10x-router/SKILL.md`
+- `plugins/cc10x/skills/cc10x-router/references/`
+- `plugins/cc10x/skills/session-memory/SKILL.md`
+- `plugins/cc10x/skills/plan-review-gate/SKILL.md`
+- `plugins/cc10x/skills/verification-before-completion/SKILL.md`
+- `plugins/cc10x/agents/`
+- `plugins/cc10x/scripts/cc10x_hooklib.py`
+- `plugins/cc10x/scripts/cc10x_pretooluse_guard.py`
+- `plugins/cc10x/scripts/cc10x_posttooluse_artifact_guard.py`
+- `plugins/cc10x/scripts/cc10x_sessionstart_context.py`
+- `plugins/cc10x/scripts/cc10x_precompact_state.py`
+- `plugins/cc10x/scripts/cc10x_postcompact_context.py`
+- `plugins/cc10x/scripts/cc10x_stop_persist.py`
+- `plugins/cc10x/scripts/cc10x_stop_failure_log.py`
+- `plugins/cc10x/scripts/cc10x_task_completed_guard.py`
+- `plugins/cc10x/scripts/cc10x_workflow_replay_check.py`
+- `plugins/cc10x/scripts/cc10x_harness_audit.py`
+- `plugins/cc10x/tests/fixtures/`
+
+Search:
+
+```bash
+rg -n "router|orchestration|gate|fail-closed|workflow|events.jsonl|artifact|hook|remediation|verifier|memory|compaction" references/cc10x
+```
+
+### 需要提取什么
+
+- Router supremacy invariant
+- Workflow artifact schema
+- Event log design
+- Agent contract format
+- Phase gate rules
+- Remediation loop constraints
+- Resume 和 compaction survival strategy
+- Hook boundary: guardrail, not orchestrator
+
+### Harness lesson
+
+cc10x 说明：prompt/plugin 层也可以承载 harness discipline，但它不是 generic runtime 的替代品。它的可复制点是 router-owned workflow、durable artifact、explicit phase rule 和 evidence gate，而不是把 plugin-first repo 当所有 harness 问题的默认入口。
 
 ## P1 - OpenAI Agents SDK Python
 
